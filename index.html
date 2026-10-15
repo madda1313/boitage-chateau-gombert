@@ -74,7 +74,7 @@ section {
   margin-bottom: 13px;
 }
 
-input {
+input, select {
   width: 100%;
   height: 56px;
   padding: 0 15px;
@@ -85,7 +85,7 @@ input {
   font-size: 17px;
 }
 
-input:focus {
+input:focus, select:focus {
   outline: 3px solid rgba(6,75,46,.1);
   border-color: var(--green);
 }
@@ -93,6 +93,38 @@ input:focus {
 button {
   font: inherit;
   cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+.search-wrap {
+  position: relative;
+}
+
+#search {
+  padding-right: 54px;
+}
+
+#clearSearch {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: #F0F2EE;
+  color: var(--green);
+  font-size: 27px;
+  line-height: 1;
+}
+
+#clearSearch[hidden],
+[hidden] {
+  display: none !important;
 }
 
 #results {
@@ -184,23 +216,32 @@ button {
   color: var(--green);
 }
 
-#save {
+.primary {
   width: 100%;
-  height: 57px;
+  min-height: 57px;
   margin-top: 12px;
+  padding: 12px;
   border: 0;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--green), var(--dark));
   color: white;
   font-weight: 700;
-  letter-spacing: 1.2px;
+  letter-spacing: .7px;
 }
 
-#save:disabled {
-  opacity: .45;
+.secondary {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  background: white;
+  color: var(--green);
+  font-weight: 700;
 }
 
-#connection, #message {
+#connection, #message, #addMessage, #queueMessage {
   font-size: 13px;
   text-align: center;
   min-height: 22px;
@@ -210,12 +251,30 @@ button {
 
 .error { color: #A33 !important; }
 .success { color: #267748 !important; }
+.warning { color: #986B16 !important; }
 
 .hint {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
   margin-top: 12px;
+}
+
+.field-label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 14px 0 7px;
+}
+
+.notice {
+  background: #FFF7E7;
+  border: 1px solid #E9D6A8;
+  border-radius: 10px;
+  padding: 12px;
+  color: #79591E;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 footer {
@@ -231,7 +290,8 @@ footer {
 <main>
 
 <header>
-  <img src="logo-agence.png" alt="Immobilière du Golf"
+  <img src="logo-agence.png"
+       alt="Immobilière du Golf"
        onerror="this.style.display='none'">
   <h1>Château-Gombert</h1>
   <p>Immobilière du Golf · Suivi de prospection</p>
@@ -243,11 +303,86 @@ footer {
 
 <section>
   <div class="label">Rechercher une rue</div>
-  <input id="search"
-         type="text"
-         placeholder="Nom de la rue ou résidence…"
-         autocomplete="off">
+
+  <div class="search-wrap">
+    <input id="search"
+           type="text"
+           placeholder="Nom de la rue ou résidence…"
+           autocomplete="off">
+
+    <button id="clearSearch"
+            type="button"
+            aria-label="Effacer la recherche"
+            title="Effacer la recherche"
+            hidden>×</button>
+  </div>
+
   <div id="results"></div>
+
+  <div id="missingStreet" hidden>
+    <p class="hint">
+      Cette rue n'apparaît pas dans la base de données.
+    </p>
+    <button id="showAdd" class="secondary" type="button">
+      + AJOUTER CETTE RUE À LA BASE DE DONNÉES
+    </button>
+  </div>
+</section>
+
+<section id="addSection" hidden>
+  <div class="label">Ajouter une nouvelle rue</div>
+
+  <label class="field-label" for="newStreet">
+    Nom complet de la rue ou résidence
+  </label>
+  <input id="newStreet"
+         type="text"
+         placeholder="Ex. Impasse des Oliviers"
+         maxlength="180">
+
+  <label class="field-label" for="newType">
+    Type de voie
+  </label>
+  <select id="newType">
+    <option value="">À préciser</option>
+    <option value="Allée">Allée</option>
+    <option value="Avenue">Avenue</option>
+    <option value="Boulevard">Boulevard</option>
+    <option value="Chemin">Chemin</option>
+    <option value="Impasse">Impasse</option>
+    <option value="Lotissement">Lotissement</option>
+    <option value="Montée">Montée</option>
+    <option value="Place">Place</option>
+    <option value="Résidence">Résidence</option>
+    <option value="Route">Route</option>
+    <option value="Rue">Rue</option>
+    <option value="Traverse">Traverse</option>
+    <option value="Autre">Autre</option>
+  </select>
+
+  <label class="field-label" for="newSector">
+    Secteur
+  </label>
+  <select id="newSector">
+    <option value="Château-Gombert / à répartir">
+      Château-Gombert / à répartir
+    </option>
+  </select>
+
+  <button id="addStreet" class="primary" type="button">
+    CONFIRMER L'AJOUT DE LA RUE
+  </button>
+
+  <button id="cancelAdd" class="secondary" type="button">
+    ANNULER
+  </button>
+
+  <div id="addMessage" role="status" aria-live="polite"></div>
+
+  <p class="hint">
+    L'ajout sera effectué directement dans Google Sheets.
+    Une connexion Internet est nécessaire pour créer une rue.
+  </p>
 </section>
 
 <section>
@@ -274,16 +409,34 @@ footer {
          placeholder="0"
          disabled>
 
-  <button id="save" disabled>
+  <button id="save" class="primary" disabled>
     ENREGISTRER
   </button>
 
   <div id="message" role="status" aria-live="polite"></div>
 
   <p class="hint">
-    Les enregistrements mettent à jour le Google Sheets.
     Une valeur supérieure à zéro marque la rue comme FAIT.
     Une valeur de zéro ne retire pas automatiquement le statut FAIT.
+  </p>
+</section>
+
+<section>
+  <div class="label">Sauvegardes en attente</div>
+
+  <div id="queueMessage" aria-live="polite">
+    Aucune sauvegarde en attente.
+  </div>
+
+  <button id="retryQueue" class="secondary" type="button" hidden>
+    RÉESSAYER LA SYNCHRONISATION
+  </button>
+
+  <p class="hint">
+    Si la connexion est indisponible, les BAL sont conservées
+    dans ce navigateur et envoyées lorsque la connexion revient.
+    Ne videz pas les données du navigateur tant qu'il reste
+    des sauvegardes en attente.
   </p>
 </section>
 
@@ -292,15 +445,21 @@ footer {
 </main>
 
 <script>
+'use strict';
 
-// API CHÂTEAU-GOMBERT — DÉJÀ CONFIGURÉE
-const API_URL = 'https://script.google.com/macros/s/AKfycbzreYN4jtkmwdTcrsfnVDKBQgk7KeR1jrklyXvSoInc8JWjUktCEw8Qt1g_o6wUQix1vg/exec';
+// API CHÂTEAU-GOMBERT EXISTANTE
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbzreYN4jtkmwdTcrsfnVDKBQgk7KeR1jrklyXvSoInc8JWjUktCEw8Qt1g_o6wUQix1vg/exec';
 
 const CACHE_KEY = 'chateau_gombert_liste_v1';
+const QUEUE_KEY = 'chateau_gombert_attente_v1';
 
 let streets = [];
 let active = null;
 let saving = false;
+let syncingQueue = false;
+let adding = false;
+let lastQueueError = '';
 
 const $ = id => document.getElementById(id);
 
@@ -325,6 +484,11 @@ function message(text, cls = '') {
   $('message').className = cls;
 }
 
+function addMessage(text, cls = '') {
+  $('addMessage').textContent = text;
+  $('addMessage').className = cls;
+}
+
 function jsonp(params, timeout = 15000) {
   return new Promise((resolve, reject) => {
     if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(API_URL)) {
@@ -347,7 +511,12 @@ function jsonp(params, timeout = 15000) {
       finished = true;
       clearTimeout(timer);
       script.remove();
-      delete window[callback];
+
+      // Un callback tardif ne doit pas déclencher d'erreur.
+      window[callback] = () => {};
+      setTimeout(() => {
+        try { delete window[callback]; } catch (e) {}
+      }, 60000);
 
       if (error) reject(error);
       else resolve(data);
@@ -379,8 +548,84 @@ async function api(params) {
   return data;
 }
 
+function getQueue() {
+  try {
+    const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+    return Array.isArray(queue) ? queue : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function setQueue(queue) {
+  // Si le stockage échoue, on ne prétend pas avoir sauvegardé.
+  localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+  renderQueue();
+}
+
+function pendingFor(id) {
+  return getQueue().filter(
+    item => String(item.id) === String(id)
+  );
+}
+
+function renderQueue() {
+  const queue = getQueue();
+  const count = queue.length;
+
+  if (!count) {
+    $('queueMessage').textContent =
+      '✓ Toutes les sauvegardes ont été transmises.';
+    $('queueMessage').className = 'success';
+    $('retryQueue').hidden = true;
+    return;
+  }
+
+  $('queueMessage').textContent =
+    count + ' sauvegarde(s) en attente de synchronisation.' +
+    (lastQueueError ? ' ' + lastQueueError : '');
+
+  $('queueMessage').className = 'warning';
+  $('retryQueue').hidden = false;
+  $('retryQueue').disabled = syncingQueue;
+}
+
+function storeStreets() {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(streets));
+  } catch (error) {
+    // Le cache de lecture n'est pas indispensable.
+  }
+}
+
+function applyPending() {
+  // Les saisies locales priment sur les anciennes valeurs du serveur
+  // tant que leur enregistrement n'a pas été confirmé.
+  getQueue().forEach(item => {
+    const street = streets.find(
+      s => String(s.id) === String(item.id)
+    );
+
+    if (street) {
+      street.bal = item.bal;
+      if (item.bal > 0) street.fait = 'Oui';
+      street.pending = true;
+    }
+  });
+}
+
 function render() {
-  if (!active) return;
+  if (!active) {
+    $('streetName').textContent = 'Aucune rue sélectionnée';
+    $('streetMeta').textContent = 'Recherchez une rue ci-dessus';
+    $('tag').textContent = '';
+    $('tag').className = '';
+    $('currentBal').textContent = '—';
+    $('bal').value = '';
+    $('bal').disabled = true;
+    $('save').disabled = true;
+    return;
+  }
 
   $('streetName').textContent = active.rue;
 
@@ -392,40 +637,61 @@ function render() {
 
   const done = String(active.fait).toLowerCase() === 'oui';
 
-  $('tag').textContent = done ? '✓ FAIT' : 'À FAIRE';
-  $('tag').className = 'tag' + (done ? ' yes' : '');
+  $('tag').textContent = active.pending
+    ? '⏳ EN ATTENTE DE SYNCHRONISATION'
+    : done ? '✓ FAIT' : 'À FAIRE';
+
+  $('tag').className =
+    'tag' + (done && !active.pending ? ' yes' : '');
 
   $('currentBal').textContent =
-    active.bal === null ? '—' : active.bal;
+    active.bal === null || active.bal === undefined ||
+    active.bal === '' ? '—' : active.bal;
 
   $('bal').value =
-    active.bal === null ? '' : active.bal;
+    active.bal === null || active.bal === undefined ||
+    active.bal === '' ? '' : active.bal;
 
   $('bal').disabled = false;
   $('save').disabled = saving;
 }
 
+function updateClearButton() {
+  $('clearSearch').hidden = !$('search').value.length;
+}
+
 function choose(id) {
-  active = streets.find(s => String(s.id) === String(id)) || null;
+  active = streets.find(
+    s => String(s.id) === String(id)
+  ) || null;
 
   $('results').replaceChildren();
   $('search').value = active?.rue || '';
+  updateClearButton();
+
+  $('missingStreet').hidden = true;
+  $('addSection').hidden = true;
   message('');
 
   render();
 
-  if (active) {
-    api({ action: 'getRue', id: active.id })
+  if (active && navigator.onLine && !pendingFor(active.id).length) {
+    const selectedId = active.id;
+
+    api({ action: 'getRue', id: selectedId })
       .then(data => {
         if (
           active &&
-          String(active.id) === String(data.id) &&
-          !saving
+          String(active.id) === String(selectedId) &&
+          !saving &&
+          !pendingFor(selectedId).length
         ) {
           Object.assign(active, {
             bal: data.bal,
-            fait: data.fait
+            fait: data.fait,
+            pending: false
           });
+
           render();
         }
       })
@@ -434,12 +700,19 @@ function choose(id) {
 }
 
 function search() {
-  const query = normalize($('search').value);
+  updateClearButton();
+
+  const raw = $('search').value.trim();
+  const query = normalize(raw);
   const box = $('results');
 
   box.replaceChildren();
+  $('missingStreet').hidden = true;
 
-  if (!query) return;
+  if (!raw) {
+    $('addSection').hidden = true;
+    return;
+  }
 
   const matches = streets
     .filter(s =>
@@ -449,7 +722,15 @@ function search() {
     .slice(0, 25);
 
   if (!matches.length) {
-    box.textContent = 'Aucune rue trouvée';
+    const notice = document.createElement('p');
+    notice.className = 'hint';
+    notice.textContent = 'Aucune rue trouvée.';
+    box.appendChild(notice);
+
+    if (streets.length) {
+      $('missingStreet').hidden = false;
+    }
+
     return;
   }
 
@@ -464,12 +745,17 @@ function search() {
     const details = document.createElement('small');
     details.textContent =
       s.secteur + ' · ' +
-      (s.bal === null ? 'BAL non renseignées' : s.bal + ' BAL') +
+      (s.bal === null || s.bal === ''
+        ? 'BAL non renseignées'
+        : s.bal + ' BAL') +
       ' · ' +
-      (String(s.fait).toLowerCase() === 'oui' ? 'FAIT' : 'À FAIRE');
+      (s.pending
+        ? 'EN ATTENTE'
+        : String(s.fait).toLowerCase() === 'oui'
+          ? 'FAIT'
+          : 'À FAIRE');
 
     button.append(name, details);
-
     button.addEventListener('click', () => choose(s.id));
     box.appendChild(button);
   });
@@ -479,9 +765,10 @@ async function sync() {
   try {
     const data = await api({ action: 'liste' });
 
-    streets = data.rues || [];
+    streets = Array.isArray(data.rues) ? data.rues : [];
 
-    localStorage.setItem(CACHE_KEY, JSON.stringify(streets));
+    applyPending();
+    storeStreets();
 
     status(streets.length + ' rues disponibles', 'success');
 
@@ -495,12 +782,137 @@ async function sync() {
         render();
       }
     }
+
+    if ($('search').value && !active) search();
+
   } catch (error) {
     if (streets.length) {
-      status(streets.length + ' rues en cache · connexion indisponible');
+      status(
+        streets.length + ' rues en cache · connexion indisponible',
+        'warning'
+      );
     } else {
       status(error.message, 'error');
     }
+  }
+}
+
+function queueSave(id, bal) {
+  const queue = getQueue();
+
+  // On conserve l'ordre des opérations.
+  // Une nouvelle saisie pour la même rue remplace
+  // les précédentes saisies encore en attente.
+  const filtered = queue.filter(
+    item => String(item.id) !== String(id)
+  );
+
+  filtered.push({
+    id: String(id),
+    bal,
+    createdAt: new Date().toISOString()
+  });
+
+  setQueue(filtered);
+
+  const item = streets.find(
+    s => String(s.id) === String(id)
+  );
+
+  if (item) {
+    item.bal = bal;
+    if (bal > 0) item.fait = 'Oui';
+    item.pending = true;
+  }
+
+  if (active && String(active.id) === String(id)) {
+    active = item || active;
+    render();
+  }
+
+  storeStreets();
+}
+
+async function processQueue() {
+  if (syncingQueue || !navigator.onLine) {
+    renderQueue();
+    return;
+  }
+
+  if (!getQueue().length) {
+    renderQueue();
+    return;
+  }
+
+  syncingQueue = true;
+  lastQueueError = '';
+  renderQueue();
+
+  let changed = false;
+
+  try {
+    while (navigator.onLine) {
+      const queue = getQueue();
+      if (!queue.length) break;
+
+      const item = queue[0];
+
+      try {
+        const data = await api({
+          action: 'updateBAL',
+          id: item.id,
+          bal: item.bal
+        });
+
+        // On retire uniquement l'opération réellement confirmée.
+        const current = getQueue();
+
+        if (
+          current.length &&
+          current[0].id === item.id &&
+          current[0].createdAt === item.createdAt
+        ) {
+          current.shift();
+          setQueue(current);
+        }
+
+        const street = streets.find(
+          s => String(s.id) === String(item.id)
+        );
+
+        if (street && !pendingFor(item.id).length) {
+          street.bal = data.bal;
+          street.fait = data.fait;
+          street.pending = false;
+        }
+
+        changed = true;
+      } catch (error) {
+        lastQueueError =
+          'Dernier essai : ' + error.message;
+        break;
+      }
+    }
+  } finally {
+    syncingQueue = false;
+    applyPending();
+    storeStreets();
+
+    if (active) {
+      const updated = streets.find(
+        s => String(s.id) === String(active.id)
+      );
+      if (updated && !saving) {
+        active = updated;
+        render();
+      }
+    }
+
+    renderQueue();
+  }
+
+  if (changed && navigator.onLine) {
+    await sync();
   }
 }
 
@@ -509,9 +921,14 @@ async function save() {
 
   const raw = $('bal').value.trim();
 
-  if (!/^\d+$/.test(raw) ||
-      !Number.isSafeInteger(Number(raw))) {
-    message('Saisissez un nombre entier positif ou zéro.', 'error');
+  if (
+    !/^\d+$/.test(raw) ||
+    !Number.isSafeInteger(Number(raw))
+  ) {
+    message(
+      'Saisissez un nombre entier positif ou zéro.',
+      'error'
+    );
     return;
   }
 
@@ -521,51 +938,221 @@ async function save() {
   saving = true;
   $('save').disabled = true;
 
-  message('Enregistrement en cours…');
-
   try {
-    const data = await api({
-      action: 'updateBAL',
-      id,
-      bal
-    });
+    // On sauvegarde d'abord localement.
+    // Ainsi, une coupure pendant l'envoi ne perd pas la saisie.
+    queueSave(id, bal);
 
-    const item = streets.find(
-      s => String(s.id) === String(id)
-    );
+    if (!navigator.onLine) {
+      message(
+        '⏳ ' + bal +
+        ' BAL conservées sur cet appareil. Envoi au retour du réseau.',
+        'warning'
+      );
+    } else {
+      message('Sauvegarde locale effectuée. Synchronisation…');
 
-    if (item) {
-      item.bal = data.bal;
-      item.fait = data.fait;
+      await processQueue();
+
+      if (pendingFor(id).length) {
+        message(
+          '⏳ ' + bal +
+          ' BAL en attente de confirmation du serveur.',
+          'warning'
+        );
+      } else {
+        message(
+          '✓ ' + bal +
+          ' BAL enregistrées dans Google Sheets',
+          'success'
+        );
+      }
     }
-
-    if (active && String(active.id) === String(id)) {
-      active = item || {
-        ...active,
-        bal: data.bal,
-        fait: data.fait
-      };
-
-      render();
-    }
-
-    localStorage.setItem(CACHE_KEY, JSON.stringify(streets));
-
-    message('✓ ' + bal + ' BAL enregistrées dans Google Sheets', 'success');
-
-    await sync();
-
   } catch (error) {
-    message('Non enregistré : ' + error.message, 'error');
-
+    message(
+      'Impossible de conserver cette saisie : ' + error.message,
+      'error'
+    );
   } finally {
     saving = false;
     $('save').disabled = !active;
   }
 }
 
+function prepareAdd() {
+  const name = $('search').value.trim();
+
+  $('newStreet').value = name;
+  $('addSection').hidden = false;
+  addMessage('');
+
+  $('addSection').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+}
+
+async function addStreet() {
+  if (adding) return;
+
+  const rue = $('newStreet').value.trim();
+  const type = $('newType').value;
+  const secteur = $('newSector').value;
+
+  if (rue.length < 3) {
+    addMessage(
+      'Indiquez un nom de rue d’au moins 3 caractères.',
+      'error'
+    );
+    return;
+  }
+
+  if (!navigator.onLine) {
+    addMessage(
+      'L’ajout d’une nouvelle rue nécessite une connexion Internet.',
+      'warning'
+    );
+    return;
+  }
+
+  const duplicate = streets.find(
+    s => normalize(s.rue) === normalize(rue)
+  );
+
+  if (duplicate) {
+    addMessage(
+      'Cette rue semble déjà exister dans la base. ' +
+      'Sélectionnez-la dans la recherche.',
+      'error'
+    );
+    return;
+  }
+
+  if (!confirm(
+    'Ajouter cette rue dans Google Sheets ?\n\n' +
+    rue + '\n' +
+    secteur
+  )) {
+    return;
+  }
+
+  adding = true;
+  $('addStreet').disabled = true;
+  addMessage('Création de la rue en cours…');
+
+  try {
+    // Cette action nécessite la nouvelle version
+    // du code Google Apps Script.
+    const data = await api({
+      action: 'addRue',
+      rue,
+      type,
+      secteur
+    });
+
+    if (!data.rue || data.rue.id === undefined) {
+      throw new Error(
+        'Réponse serveur incomplète. Vérifiez Apps Script.'
+      );
+    }
+
+    addMessage('✓ Rue ajoutée dans Google Sheets.', 'success');
+
+    $('addSection').hidden = true;
+    $('missingStreet').hidden = true;
+
+    await sync();
+
+    // La rue nouvellement créée est sélectionnée.
+    if (!streets.some(
+      s => String(s.id) === String(data.rue.id)
+    )) {
+      streets.push(data.rue);
+      storeStreets();
+    }
+
+    choose(data.rue.id);
+
+  } catch (error) {
+    addMessage(
+      'Ajout non confirmé : ' + error.message +
+      '. Vérifiez le tableau avant de réessayer.',
+      'error'
+    );
+  } finally {
+    adding = false;
+    $('addStreet').disabled = false;
+  }
+}
+
+function clearSearch() {
+  $('search').value = '';
+  $('results').replaceChildren();
+  $('missingStreet').hidden = true;
+  $('addSection').hidden = true;
+
+  active = null;
+  message('');
+  render();
+  updateClearButton();
+
+  $('search').focus();
+}
+
+function populateSectors() {
+  const select = $('newSector');
+  const values = [...new Set(
+    streets.map(s => String(s.secteur || '').trim())
+      .filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b, 'fr'));
+
+  const selected = select.value;
+
+  select.replaceChildren();
+
+  const fallback = 'Château-Gombert / à répartir';
+
+  if (!values.includes(fallback)) {
+    values.unshift(fallback);
+  }
+
+  values.forEach(value => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+
+  select.value = values.includes(selected)
+    ? selected
+    : fallback;
+}
+
+async function refreshAll() {
+  if (saving || adding) return;
+
+  await processQueue();
+  await sync();
+  populateSectors();
+}
+
+// ÉVÉNEMENTS
+
 $('search').addEventListener('input', search);
+$('clearSearch').addEventListener('click', clearSearch);
 $('save').addEventListener('click', save);
+
+$('showAdd').addEventListener('click', prepareAdd);
+$('addStreet').addEventListener('click', addStreet);
+
+$('cancelAdd').addEventListener('click', () => {
+  $('addSection').hidden = true;
+  addMessage('');
+});
+
+$('retryQueue').addEventListener('click', refreshAll);
+
+// CHARGEMENT INITIAL
 
 try {
   const cached = JSON.parse(
@@ -576,22 +1163,38 @@ try {
     streets = cached;
 
     if (streets.length) {
-      status(streets.length + ' rues en cache · synchronisation…');
+      status(
+        streets.length + ' rues en cache · synchronisation…'
+      );
     }
   }
 } catch (error) {}
 
-sync();
+applyPending();
+renderQueue();
+populateSectors();
 
+refreshAll();
+
+// Synchronisation périodique.
 setInterval(() => {
-  if (!saving && navigator.onLine) sync();
-}, 5 * 60 * 1000);
+  if (!saving && !adding && navigator.onLine) {
+    refreshAll();
+  }
+}, 60 * 1000);
 
-window.addEventListener('online', sync);
+// Retour du réseau.
+window.addEventListener('online', refreshAll);
 
+// Retour sur l'application.
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && !saving) sync();
+  if (!document.hidden && !saving && !adding) {
+    refreshAll();
+  }
 });
+
+// Sécurité supplémentaire avant fermeture de l'onglet :
+// les données en attente restent conservées dans localStorage.
 
 </script>
 </body>
