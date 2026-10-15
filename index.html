@@ -16,46 +16,35 @@
   --muted: #66756D;
   --border: #dbe4da;
 }
-
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
   color: var(--dark);
   background: radial-gradient(circle at top, #fffdf8, var(--cream) 65%);
 }
-
 main {
   max-width: 620px;
   margin: auto;
   padding: 18px 16px 45px;
 }
-
-header {
-  text-align: center;
-  padding: 24px 0;
-}
-
+header { text-align: center; padding: 24px 0; }
 header img {
   max-width: 250px;
   max-height: 100px;
   object-fit: contain;
 }
-
 header h1 {
   font: normal 31px Georgia, serif;
   color: var(--green);
   margin: 12px 0;
 }
-
 header p {
   color: var(--gold);
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-
 section {
   background: #FFFCF6;
   border: 1px solid var(--border);
@@ -64,7 +53,6 @@ section {
   margin-bottom: 15px;
   box-shadow: 0 10px 28px rgba(20,50,35,.05);
 }
-
 .label {
   color: var(--gold);
   font-size: 11px;
@@ -73,7 +61,6 @@ section {
   text-transform: uppercase;
   margin-bottom: 13px;
 }
-
 input, select {
   width: 100%;
   height: 56px;
@@ -84,30 +71,15 @@ input, select {
   color: var(--dark);
   font-size: 17px;
 }
-
 input:focus, select:focus {
   outline: 3px solid rgba(6,75,46,.1);
   border-color: var(--green);
 }
-
-button {
-  font: inherit;
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: .45;
-}
-
-.search-wrap {
-  position: relative;
-}
-
-#search {
-  padding-right: 54px;
-}
-
+button { font: inherit; cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .45; }
+[hidden] { display: none !important; }
+.search-wrap { position: relative; }
+#search { padding-right: 54px; }
 #clearSearch {
   position: absolute;
   right: 6px;
@@ -119,20 +91,12 @@ button:disabled {
   background: #F0F2EE;
   color: var(--green);
   font-size: 27px;
-  line-height: 1;
 }
-
-#clearSearch[hidden],
-[hidden] {
-  display: none !important;
-}
-
 #results {
   max-height: 310px;
   overflow-y: auto;
   margin-top: 8px;
 }
-
 .result {
   display: block;
   width: 100%;
@@ -143,29 +107,21 @@ button:disabled {
   border-radius: 10px;
   text-align: left;
 }
-
 .result strong {
   display: block;
   font: normal 17px Georgia, serif;
 }
-
 .result small {
   display: block;
   color: var(--muted);
   font-size: 12px;
   margin-top: 5px;
 }
-
 #streetName {
   font: normal 29px Georgia, serif;
   margin: 0 0 8px;
 }
-
-#streetMeta {
-  color: var(--muted);
-  font-size: 13px;
-}
-
+#streetMeta { color: var(--muted); font-size: 13px; }
 .tag {
   display: inline-block;
   margin: 14px 0 8px;
@@ -176,46 +132,48 @@ button:disabled {
   font-size: 12px;
   font-weight: 700;
 }
-
-.tag.yes {
-  background: #E7F2EA;
-  color: #327149;
-}
-
+.tag.yes { background: #E7F2EA; color: #327149; }
 .count {
   text-align: center;
   border-top: 1px solid var(--border);
   margin-top: 15px;
   padding-top: 18px;
 }
-
 .count label {
   display: block;
   color: var(--muted);
   font-size: 11px;
   text-transform: uppercase;
 }
-
 .count b {
   display: block;
   font: normal 58px Georgia, serif;
   color: var(--green);
   margin: 5px 0;
 }
-
 .count small {
   color: var(--gold);
   letter-spacing: 2px;
   font-size: 11px;
 }
-
+.daily-number {
+  text-align: center;
+  font: normal 58px Georgia, serif;
+  color: var(--green);
+  margin: 5px 0;
+}
+.daily-caption {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
 #bal {
   height: 78px;
   text-align: center;
   font: normal 43px Georgia, serif;
   color: var(--green);
 }
-
 .primary {
   width: 100%;
   min-height: 57px;
@@ -228,7 +186,6 @@ button:disabled {
   font-weight: 700;
   letter-spacing: .7px;
 }
-
 .secondary {
   width: 100%;
   min-height: 48px;
@@ -240,7 +197,6 @@ button:disabled {
   color: var(--green);
   font-weight: 700;
 }
-
 #connection, #message, #addMessage, #queueMessage {
   font-size: 13px;
   text-align: center;
@@ -248,35 +204,21 @@ button:disabled {
   margin: 12px 0;
   color: var(--muted);
 }
-
 .error { color: #A33 !important; }
 .success { color: #267748 !important; }
 .warning { color: #986B16 !important; }
-
 .hint {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
   margin-top: 12px;
 }
-
 .field-label {
   display: block;
   color: var(--muted);
   font-size: 13px;
   margin: 14px 0 7px;
 }
-
-.notice {
-  background: #FFF7E7;
-  border: 1px solid #E9D6A8;
-  border-radius: 10px;
-  padding: 12px;
-  color: #79591E;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
 footer {
   text-align: center;
   color: #899A8C;
@@ -300,6 +242,16 @@ footer {
 <div id="connection" aria-live="polite">
   Connexion au tableau…
 </div>
+
+<section>
+  <div class="label">Compteur du jour · cet appareil</div>
+  <div class="daily-number" id="dailyCount">0</div>
+  <div class="daily-caption">
+    BAL ajoutées ou retirées aujourd'hui
+    <br>
+    Remise à zéro à minuit · heure de Marseille
+  </div>
+</section>
 
 <section>
   <div class="label">Rechercher une rue</div>
@@ -447,12 +399,12 @@ footer {
 <script>
 'use strict';
 
-// API CHÂTEAU-GOMBERT EXISTANTE
 const API_URL =
   'https://script.google.com/macros/s/AKfycbzreYN4jtkmwdTcrsfnVDKBQgk7KeR1jrklyXvSoInc8JWjUktCEw8Qt1g_o6wUQix1vg/exec';
 
 const CACHE_KEY = 'chateau_gombert_liste_v1';
 const QUEUE_KEY = 'chateau_gombert_attente_v1';
+const DAILY_KEY = 'chateau_gombert_compteur_jour_v1';
 
 let streets = [];
 let active = null;
@@ -491,11 +443,6 @@ function addMessage(text, cls = '') {
 
 function jsonp(params, timeout = 15000) {
   return new Promise((resolve, reject) => {
-    if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(API_URL)) {
-      reject(new Error('Adresse Apps Script non configurée'));
-      return;
-    }
-
     const callback = 'cb_' + Date.now() + '_' +
       Math.floor(Math.random() * 1000000);
 
@@ -512,7 +459,6 @@ function jsonp(params, timeout = 15000) {
       clearTimeout(timer);
       script.remove();
 
-      // Un callback tardif ne doit pas déclencher d'erreur.
       window[callback] = () => {};
       setTimeout(() => {
         try { delete window[callback]; } catch (e) {}
@@ -548,9 +494,72 @@ async function api(params) {
   return data;
 }
 
+// DATE LOCALE DE MARSEILLE
+
+function todayMarseille() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Paris',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+
+  const part = type =>
+    parts.find(p => p.type === type)?.value || '';
+
+  return part('year') + '-' +
+    part('month') + '-' + part('day');
+}
+
+// COMPTEUR QUOTIDIEN LOCAL
+
+function dailyState() {
+  const today = todayMarseille();
+
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(DAILY_KEY) || 'null'
+    );
+
+    if (
+      saved &&
+      saved.date === today &&
+      Number.isSafeInteger(saved.total)
+    ) {
+      return saved;
+    }
+  } catch (error) {}
+
+  return { date: today, total: 0 };
+}
+
+function renderDaily() {
+  const state = dailyState();
+
+  $('dailyCount').textContent =
+    state.total.toLocaleString('fr-FR');
+}
+
+function addDailyDifference(difference) {
+  const state = dailyState();
+
+  state.total += difference;
+
+  localStorage.setItem(
+    DAILY_KEY,
+    JSON.stringify(state)
+  );
+
+  renderDaily();
+}
+
+// SAUVEGARDES EN ATTENTE
+
 function getQueue() {
   try {
-    const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+    const queue = JSON.parse(
+      localStorage.getItem(QUEUE_KEY) || '[]'
+    );
     return Array.isArray(queue) ? queue : [];
   } catch (error) {
     return [];
@@ -558,8 +567,10 @@ function getQueue() {
 }
 
 function setQueue(queue) {
-  // Si le stockage échoue, on ne prétend pas avoir sauvegardé.
-  localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+  localStorage.setItem(
+    QUEUE_KEY,
+    JSON.stringify(queue)
+  );
   renderQueue();
 }
 
@@ -592,15 +603,14 @@ function renderQueue() {
 
 function storeStreets() {
   try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(streets));
-  } catch (error) {
-    // Le cache de lecture n'est pas indispensable.
-  }
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify(streets)
+    );
+  } catch (error) {}
 }
 
 function applyPending() {
-  // Les saisies locales priment sur les anciennes valeurs du serveur
-  // tant que leur enregistrement n'a pas été confirmé.
   getQueue().forEach(item => {
     const street = streets.find(
       s => String(s.id) === String(item.id)
@@ -614,10 +624,14 @@ function applyPending() {
   });
 }
 
+// AFFICHAGE DE LA RUE
+
 function render() {
   if (!active) {
-    $('streetName').textContent = 'Aucune rue sélectionnée';
-    $('streetMeta').textContent = 'Recherchez une rue ci-dessus';
+    $('streetName').textContent =
+      'Aucune rue sélectionnée';
+    $('streetMeta').textContent =
+      'Recherchez une rue ci-dessus';
     $('tag').textContent = '';
     $('tag').className = '';
     $('currentBal').textContent = '—';
@@ -635,7 +649,8 @@ function render() {
     'N° ' + active.id
   ].filter(Boolean).join(' · ');
 
-  const done = String(active.fait).toLowerCase() === 'oui';
+  const done =
+    String(active.fait).toLowerCase() === 'oui';
 
   $('tag').textContent = active.pending
     ? '⏳ EN ATTENTE DE SYNCHRONISATION'
@@ -645,19 +660,26 @@ function render() {
     'tag' + (done && !active.pending ? ' yes' : '');
 
   $('currentBal').textContent =
-    active.bal === null || active.bal === undefined ||
-    active.bal === '' ? '—' : active.bal;
+    active.bal === null ||
+    active.bal === undefined ||
+    active.bal === ''
+      ? '—'
+      : active.bal;
 
   $('bal').value =
-    active.bal === null || active.bal === undefined ||
-    active.bal === '' ? '' : active.bal;
+    active.bal === null ||
+    active.bal === undefined ||
+    active.bal === ''
+      ? ''
+      : active.bal;
 
   $('bal').disabled = false;
   $('save').disabled = saving;
 }
 
 function updateClearButton() {
-  $('clearSearch').hidden = !$('search').value.length;
+  $('clearSearch').hidden =
+    !$('search').value.length;
 }
 
 function choose(id) {
@@ -675,7 +697,11 @@ function choose(id) {
 
   render();
 
-  if (active && navigator.onLine && !pendingFor(active.id).length) {
+  if (
+    active &&
+    navigator.onLine &&
+    !pendingFor(active.id).length
+  ) {
     const selectedId = active.id;
 
     api({ action: 'getRue', id: selectedId })
@@ -698,6 +724,8 @@ function choose(id) {
       .catch(() => {});
   }
 }
+
+// RECHERCHE
 
 function search() {
   updateClearButton();
@@ -756,21 +784,31 @@ function search() {
           : 'À FAIRE');
 
     button.append(name, details);
-    button.addEventListener('click', () => choose(s.id));
+    button.addEventListener(
+      'click',
+      () => choose(s.id)
+    );
     box.appendChild(button);
   });
 }
+
+// SYNCHRONISATION GOOGLE SHEETS
 
 async function sync() {
   try {
     const data = await api({ action: 'liste' });
 
-    streets = Array.isArray(data.rues) ? data.rues : [];
+    streets = Array.isArray(data.rues)
+      ? data.rues
+      : [];
 
     applyPending();
     storeStreets();
 
-    status(streets.length + ' rues disponibles', 'success');
+    status(
+      streets.length + ' rues disponibles',
+      'success'
+    );
 
     if (active && !saving) {
       const updated = streets.find(
@@ -788,7 +826,8 @@ async function sync() {
   } catch (error) {
     if (streets.length) {
       status(
-        streets.length + ' rues en cache · connexion indisponible',
+        streets.length +
+        ' rues en cache · connexion indisponible',
         'warning'
       );
     } else {
@@ -797,12 +836,21 @@ async function sync() {
   }
 }
 
+// ENREGISTREMENT LOCAL ET COMPTEUR
+
 function queueSave(id, bal) {
+  const streetBefore = streets.find(
+    s => String(s.id) === String(id)
+  );
+
+  const previous = streetBefore
+    ? Number(streetBefore.bal) || 0
+    : 0;
+
+  const difference = bal - previous;
+
   const queue = getQueue();
 
-  // On conserve l'ordre des opérations.
-  // Une nouvelle saisie pour la même rue remplace
-  // les précédentes saisies encore en attente.
   const filtered = queue.filter(
     item => String(item.id) !== String(id)
   );
@@ -813,7 +861,12 @@ function queueSave(id, bal) {
     createdAt: new Date().toISOString()
   });
 
+  // La saisie est conservée avant de modifier le compteur.
   setQueue(filtered);
+
+  // Seule la différence est comptabilisée.
+  // L'envoi ultérieur au serveur ne la recompte pas.
+  addDailyDifference(difference);
 
   const item = streets.find(
     s => String(s.id) === String(id)
@@ -832,6 +885,8 @@ function queueSave(id, bal) {
 
   storeStreets();
 }
+
+// ENVOI DES SAUVEGARDES EN ATTENTE
 
 async function processQueue() {
   if (syncingQueue || !navigator.onLine) {
@@ -864,7 +919,6 @@ async function processQueue() {
           bal: item.bal
         });
 
-        // On retire uniquement l'opération réellement confirmée.
         const current = getQueue();
 
         if (
@@ -880,13 +934,17 @@ async function processQueue() {
           s => String(s.id) === String(item.id)
         );
 
-        if (street && !pendingFor(item.id).length) {
+        if (
+          street &&
+          !pendingFor(item.id).length
+        ) {
           street.bal = data.bal;
           street.fait = data.fait;
           street.pending = false;
         }
 
         changed = true;
+
       } catch (error) {
         lastQueueError =
           'Dernier essai : ' + error.message;
@@ -902,6 +960,7 @@ async function processQueue() {
       const updated = streets.find(
         s => String(s.id) === String(active.id)
       );
+
       if (updated && !saving) {
         active = updated;
         render();
@@ -915,6 +974,8 @@ async function processQueue() {
     await sync();
   }
 }
+
+// BOUTON ENREGISTRER
 
 async function save() {
   if (!active || saving) return;
@@ -939,18 +1000,19 @@ async function save() {
   $('save').disabled = true;
 
   try {
-    // On sauvegarde d'abord localement.
-    // Ainsi, une coupure pendant l'envoi ne perd pas la saisie.
     queueSave(id, bal);
 
     if (!navigator.onLine) {
       message(
         '⏳ ' + bal +
-        ' BAL conservées sur cet appareil. Envoi au retour du réseau.',
+        ' BAL conservées sur cet appareil. ' +
+        'Envoi au retour du réseau.',
         'warning'
       );
     } else {
-      message('Sauvegarde locale effectuée. Synchronisation…');
+      message(
+        'Sauvegarde locale effectuée. Synchronisation…'
+      );
 
       await processQueue();
 
@@ -970,7 +1032,8 @@ async function save() {
     }
   } catch (error) {
     message(
-      'Impossible de conserver cette saisie : ' + error.message,
+      'Impossible de conserver cette saisie : ' +
+      error.message,
       'error'
     );
   } finally {
@@ -978,6 +1041,8 @@ async function save() {
     $('save').disabled = !active;
   }
 }
+
+// AJOUT D'UNE NOUVELLE RUE
 
 function prepareAdd() {
   const name = $('search').value.trim();
@@ -1009,7 +1074,8 @@ async function addStreet() {
 
   if (!navigator.onLine) {
     addMessage(
-      'L’ajout d’une nouvelle rue nécessite une connexion Internet.',
+      'L’ajout d’une nouvelle rue nécessite ' +
+      'une connexion Internet.',
       'warning'
     );
     return;
@@ -1030,8 +1096,7 @@ async function addStreet() {
 
   if (!confirm(
     'Ajouter cette rue dans Google Sheets ?\n\n' +
-    rue + '\n' +
-    secteur
+    rue + '\n' + secteur
   )) {
     return;
   }
@@ -1041,8 +1106,6 @@ async function addStreet() {
   addMessage('Création de la rue en cours…');
 
   try {
-    // Cette action nécessite la nouvelle version
-    // du code Google Apps Script.
     const data = await api({
       action: 'addRue',
       rue,
@@ -1052,18 +1115,21 @@ async function addStreet() {
 
     if (!data.rue || data.rue.id === undefined) {
       throw new Error(
-        'Réponse serveur incomplète. Vérifiez Apps Script.'
+        'Réponse serveur incomplète. ' +
+        'Vérifiez Apps Script.'
       );
     }
 
-    addMessage('✓ Rue ajoutée dans Google Sheets.', 'success');
+    addMessage(
+      '✓ Rue ajoutée dans Google Sheets.',
+      'success'
+    );
 
     $('addSection').hidden = true;
     $('missingStreet').hidden = true;
 
     await sync();
 
-    // La rue nouvellement créée est sélectionnée.
     if (!streets.some(
       s => String(s.id) === String(data.rue.id)
     )) {
@@ -1075,7 +1141,8 @@ async function addStreet() {
 
   } catch (error) {
     addMessage(
-      'Ajout non confirmé : ' + error.message +
+      'Ajout non confirmé : ' +
+      error.message +
       '. Vérifiez le tableau avant de réessayer.',
       'error'
     );
@@ -1084,6 +1151,8 @@ async function addStreet() {
     $('addStreet').disabled = false;
   }
 }
+
+// EFFACER LA RECHERCHE
 
 function clearSearch() {
   $('search').value = '';
@@ -1099,15 +1168,20 @@ function clearSearch() {
   $('search').focus();
 }
 
+// LISTE DES SECTEURS
+
 function populateSectors() {
   const select = $('newSector');
+
   const values = [...new Set(
-    streets.map(s => String(s.secteur || '').trim())
-      .filter(Boolean)
-  )].sort((a, b) => a.localeCompare(b, 'fr'));
+    streets.map(
+      s => String(s.secteur || '').trim()
+    ).filter(Boolean)
+  )].sort(
+    (a, b) => a.localeCompare(b, 'fr')
+  );
 
   const selected = select.value;
-
   select.replaceChildren();
 
   const fallback = 'Château-Gombert / à répartir';
@@ -1127,6 +1201,8 @@ function populateSectors() {
     ? selected
     : fallback;
 }
+
+// ACTUALISATION GÉNÉRALE
 
 async function refreshAll() {
   if (saving || adding) return;
@@ -1150,7 +1226,10 @@ $('cancelAdd').addEventListener('click', () => {
   addMessage('');
 });
 
-$('retryQueue').addEventListener('click', refreshAll);
+$('retryQueue').addEventListener(
+  'click',
+  refreshAll
+);
 
 // CHARGEMENT INITIAL
 
@@ -1164,7 +1243,8 @@ try {
 
     if (streets.length) {
       status(
-        streets.length + ' rues en cache · synchronisation…'
+        streets.length +
+        ' rues en cache · synchronisation…'
       );
     }
   }
@@ -1172,9 +1252,13 @@ try {
 
 applyPending();
 renderQueue();
+renderDaily();
 populateSectors();
 
 refreshAll();
+
+// Vérifie le changement de jour même si le site reste ouvert.
+setInterval(renderDaily, 1000);
 
 // Synchronisation périodique.
 setInterval(() => {
@@ -1186,15 +1270,15 @@ setInterval(() => {
 // Retour du réseau.
 window.addEventListener('online', refreshAll);
 
-// Retour sur l'application.
+// Actualisation entre plusieurs onglets du même navigateur.
+window.addEventListener('storage', renderDaily);
+
+// Retour sur le site.
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && !saving && !adding) {
     refreshAll();
   }
 });
-
-// Sécurité supplémentaire avant fermeture de l'onglet :
-// les données en attente restent conservées dans localStorage.
 
 </script>
 </body>
